@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>差旅費用問答｜大新科技</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;800&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #111111;
+    --gray-1: #4a4a4a;
+    --gray-2: #8a8a8a;
+    --gray-3: #d4d4d4;
+    --gray-4: #f1f1f1;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--white);
+    color: var(--black);
+    font-family: 'Noto Sans TC', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    border-bottom: 1px solid var(--black);
+    padding: 16px 28px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  header .brand {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+  }
+
+  header .label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--gray-2);
+  }
+
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 40px 28px 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 800;
+    font-size: 26px;
+    margin: 0 0 12px;
+    line-height: 1.4;
+  }
+
+  .hero p {
+    font-size: 13.5px;
+    line-height: 1.8;
+    color: var(--gray-1);
+    margin: 0 0 20px;
+    max-width: 56ch;
+  }
+
+  .docs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    border-top: 1px solid var(--gray-3);
+    border-bottom: 1px solid var(--gray-3);
+    padding: 14px 0;
+  }
+
+  .docs a {
+    font-size: 12.5px;
+    color: var(--black);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .docs a .tag {
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    border: 1px solid var(--black);
+    padding: 1px 5px;
+  }
+
+  .docs a span.name { border-bottom: 1px solid var(--black); }
+  .docs a:hover span.name { color: var(--gray-1); border-color: var(--gray-1); }
+
+  main {
+    flex: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 28px 28px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 20px 0 6px;
+  }
+
+  .suggestions button.chip {
+    background: var(--white);
+    color: var(--black);
+    border: 1px solid var(--black);
+    font-weight: 500;
+    font-size: 12.5px;
+    padding: 7px 13px;
+    cursor: pointer;
+    font-family: 'Noto Sans TC', sans-serif;
+  }
+
+  .suggestions button.chip:hover { background: var(--black); color: var(--white); }
+
+  #chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 12px 0;
+  }
+
+  .qa-block {
+    border-top: 1px solid var(--gray-3);
+    padding: 20px 0;
+  }
+  .qa-block:first-child { border-top: none; }
+
+  .qa-block .q {
+    font-weight: 700;
+    font-size: 14.5px;
+    margin-bottom: 10px;
+  }
+
+  .qa-block .q::before {
+    content: "Q ";
+    color: var(--gray-2);
+    font-weight: 800;
+  }
+
+  .qa-block .a {
+    font-size: 14px;
+    line-height: 1.85;
+    white-space: pre-wrap;
+    color: var(--black);
+  }
+
+  .qa-block .a::before {
+    content: "A";
+    display: inline-block;
+    font-weight: 800;
+    color: var(--gray-2);
+    margin-right: 8px;
+  }
+
+  .qa-block.error .a {
+    color: var(--gray-1);
+    font-style: italic;
+  }
+
+  .qa-block.loading .a {
+    color: var(--gray-2);
+    font-style: italic;
+  }
+
+  form {
+    display: flex;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid var(--black);
+  }
+
+  textarea {
+    flex: 1;
+    resize: none;
+    border: 1px solid var(--black);
+    padding: 12px 14px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 14px;
+    background: var(--white);
+    color: var(--black);
+    height: 46px;
+    line-height: 1.5;
+  }
+
+  textarea:focus { outline: none; box-shadow: inset 0 0 0 1px var(--black); }
+
+  button[type="submit"] {
+    background: var(--black);
+    color: var(--white);
+    border: 1px solid var(--black);
+    padding: 0 24px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+  }
+
+  button[type="submit"]:hover { background: var(--gray-1); border-color: var(--gray-1); }
+  button[type="submit"]:disabled { background: var(--gray-3); border-color: var(--gray-3); color: var(--gray-1); cursor: not-allowed; }
+
+  button:focus-visible, textarea:focus-visible { outline: 2px solid var(--black); outline-offset: 2px; }
+
+  footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--gray-2);
+    padding: 14px 28px 24px;
+    letter-spacing: 0.03em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">DAXIN TECHNOLOGY</div>
+  <div class="label">差旅費用問答</div>
+</header>
+
+<div class="hero">
+  <h1>差旅費用，這樣問就對了</h1>
+  <p>本頁面只依據以下兩份 PDF 原始文件回答問題，每則回覆都會標註條文出處。若兩份文件規定不一致，會主動指出並以正式辦法為準。每一題都是獨立提問，彼此不共用對話紀錄。</p>
+
+  <div class="docs">
+    <a href="/docs/travel-policy-2026.pdf" download="員工差旅管理辦法_2026年版.pdf">
+      <span class="tag">正式辦法</span><span class="name">員工差旅管理辦法_2026年版.pdf</span>
+    </a>
+    <a href="/docs/travel-faq-2025.pdf" download="差旅常見問題FAQ_2025.pdf">
+      <span class="tag">輔助說明</span><span class="name">差旅常見問題FAQ_2025.pdf</span>
+    </a>
+  </div>
+</div>
+
+<main>
+  <div class="suggestions" id="suggestions">
+    <button class="chip" type="button">住宿費上限多少？</button>
+    <button class="chip" type="button">可以搭高鐵商務車廂嗎？</button>
+    <button class="chip" type="button">出差要幾天內報帳？</button>
+    <button class="chip" type="button">家人一起出差的費用可以報嗎？</button>
+  </div>
+
+  <div id="chat"></div>
+
+  <form id="form">
+    <textarea id="input" placeholder="輸入你的差旅費用問題……" rows="1"></textarea>
+    <button type="submit" id="send">送出</button>
+  </form>
+</main>
+
+<footer>本工具僅供內部使用・回答內容以《員工差旅管理辦法 2026年版》為最終依據・每題皆為獨立問答</footer>
+
+<script>
+  const chatEl = document.getElementById('chat');
+  const formEl = document.getElementById('form');
+  const inputEl = document.getElementById('input');
+  const sendEl = document.getElementById('send');
+  const suggestionsEl = document.getElementById('suggestions');
+
+  function addBlock(question) {
+    const block = document.createElement('div');
+    block.className = 'qa-block loading';
+    block.innerHTML = '<div class="q"></div><div class="a">正在查詢 PDF 文件內容……</div>';
+    block.querySelector('.q').textContent = question;
+    chatEl.prepend(block);
+    return block;
+  }
+
+  // 獨立問答：每一題各自呼叫一次 API，不帶任何先前對話紀錄。
+  async function sendMessage(text) {
+    if (!text.trim()) return;
+
+    const block = addBlock(text);
+    inputEl.value = '';
+    inputEl.style.height = '46px';
+    sendEl.disabled = true;
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text }),
+      });
+
+      const data = await res.json();
+      block.classList.remove('loading');
+
+      if (!res.ok) {
+        block.classList.add('error');
+        block.querySelector('.a').textContent = data.error || '發生錯誤，請稍後再試。';
+        return;
+      }
+
+      block.querySelector('.a').textContent = data.reply;
+    } catch (err) {
+      block.classList.remove('loading');
+      block.classList.add('error');
+      block.querySelector('.a').textContent = '無法連線到伺服器，請稍後再試。';
+    } finally {
+      sendEl.disabled = false;
+      inputEl.focus();
+    }
+  }
+
+  formEl.addEventListener('submit', (e) => {
+    e.preventDefault();
+    sendMessage(inputEl.value);
+  });
+
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(inputEl.value);
+    }
+  });
+
+  inputEl.addEventListener('input', () => {
+    inputEl.style.height = '46px';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + 'px';
+  });
+
+  suggestionsEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('button.chip');
+    if (!btn) return;
+    sendMessage(btn.textContent);
+  });
+</script>
+
+</body>
+</html>

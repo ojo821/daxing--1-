@@ -1,0 +1,9 @@
+{
+  "name": "travel-rag-chatbot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "大新科技差旅費用問答助理（Gemini API + Vercel Serverless Function）",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}
